@@ -2,12 +2,13 @@ import express from 'express'
 import gravatar from 'gravatar'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import config from '../../config'
+import config from '../config'
 import {check, validationResult} from 'express-validator'
 
 const router = express.Router();
 
 import User from "../models/User";
+import Profile from "../models/Profile"
 
 /**
  * @route Post api/users
@@ -64,7 +65,7 @@ router.post(
                     id:user.id
                 }
             };
-            jwt.sign(payload,config.jwtSecret,{expireIn:36000},(err,token)=>{
+            jwt.sign(payload,config.jwtSecret,{expiresIn:36000},(err,token)=>{
                 if(err) throw err;
                 res.json({token})
             })
@@ -74,4 +75,5 @@ router.post(
         }
     }
 );
+
 module.exports = router;
